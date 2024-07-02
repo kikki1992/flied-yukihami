@@ -1,11 +1,12 @@
 from email import message
 import pyxel
-from pyxelunicode import PyxelUnicode
+#from pyxelunicode import PyxelUnicode
+import PyxelUniversalFont as puf
 
 #font
-gothic_path = "assets/misaki_ttf_2021-05-05/misaki_gothic.ttf" # ttfファイルのパス
-gothic_size = 8  # このフォントが設計された大きさ(px単位)を代入する
-mplus_path = "assets/misaki_ttf_2021-05-05/PixelMplus10-Regular.ttf"
+#gothic_path = "assets/misaki_ttf_2021-05-05/misaki_gothic.ttf" # ttfファイルのパス
+#gothic_size = 8  # このフォントが設計された大きさ(px単位)を代入する
+#mplus_path = "assets/misaki_ttf_2021-05-05/PixelMplus10-Regular.ttf"
 message1 = "空飛びたい・・"
 
 class Start():
@@ -19,9 +20,8 @@ class Start():
         self.message_list = list(message1)
         self.mozi = []
         self.count = 0
-        self.gothic = PyxelUnicode(gothic_path, gothic_size)
-        self.mplus = PyxelUnicode(mplus_path, 10)
-
+        self.gothic = puf.Writer("misaki_gothic.ttf")
+        self.feel = ""
     def update(self):
         self.animetime += 1
         if self.animetime < 100 and self.animetime % 10 == 1:
@@ -45,12 +45,13 @@ class Start():
         #移動時のゆきはみ
         pyxel.blt(self.x,self.y,0,15,self.img_y,self.w,self.h,14)
         #考え中のゆきはみ
+        
         if self.animetime >230 :
             if self.animetime % 10 == 9 and self.count < len(self.message_list):
                 self.mozi.append(self.message_list[self.count])
                 self.count += 1
+                self.feel = ''.join(self.mozi)
                 pyxel.play(0,9)
-            self.gothic.text(22,92,self.mozi,1)
-
+            self.gothic.draw(22,92,self.feel,8)
         if self.animetime > 330:
             pyxel.text(22,105,"Game Start Skey",8)

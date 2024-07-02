@@ -1,13 +1,14 @@
 from email import message
 import pyxel
-from pyxelunicode import PyxelUnicode
+#from pyxelunicode import PyxelUnicode
+import PyxelUniversalFont as puf
 
 #クリア画面
 
 #font
-gothic_path = "assets/misaki_ttf_2021-05-05/misaki_gothic.ttf" # ttfファイルのパス
-gothic_size = 8  # このフォントが設計された大きさ(px単位)を代入する
-mplus_path = "assets/misaki_ttf_2021-05-05/PixelMplus10-Regular.ttf"
+#gothic_path = "assets/misaki_ttf_2021-05-05/misaki_gothic.ttf" # ttfファイルのパス
+#gothic_size = 8  # このフォントが設計された大きさ(px単位)を代入する
+#mplus_path = "assets/misaki_ttf_2021-05-05/PixelMplus10-Regular.ttf"
 message1 = "やったぁ空が飛べたね!"
 message2 = "Restart R"
 
@@ -24,10 +25,11 @@ class End2():
         self.message_list2 = list(message2)
         self.mozi = []
         self.mozi2 = []
+        self.messe1 = ""
+        self.messe2 = ""
         self.count = 0
         self.count2 = 0
-        self.gothic = PyxelUnicode(gothic_path, gothic_size)
-        self.mplus = PyxelUnicode(mplus_path, 10)
+        self.gothic = puf.Writer("misaki_gothic.ttf")
 
     def update(self):
         
@@ -59,23 +61,24 @@ class End2():
         if self.time >120 :
             pyxel.rect(38, 89, 90, 22, 1)
             pyxel.rect(39, 90, 88, 20, 7)
-            self.gothic.text(41,92,self.mozi,1)
-            mozi2 = "".join(self.mozi2)
-            pyxel.text(41,102,mozi2,1)
+            self.gothic.draw(41,92,self.messe1,8)
+            pyxel.text(41,102,self.messe2,1)
 
             if self.count < len(self.message_list):
                 self.mozi.append(self.message_list[self.count])
                 self.count += 1
+                self.messe1 = ''.join(self.mozi)
                 pyxel.play(0,9)
 
             elif self.count2 < len(self.message_list2):
                 self.mozi2.append(self.message_list2[self.count2])
                 self.count2 += 1
+                self.messe2 = ''.join(self.mozi2)
                 pyxel.play(0,9)
             
             if self.count2 == len(self.message_list2):
-                self.gothic.text(2,2,"制作：きっき",1)
-                self.gothic.text(2,12,"イラスト監修：抹茶",1)
+                self.gothic.draw(2,2,"制作：きっき",1,0)
+                self.gothic.draw(2,12,"イラスト監修：抹茶",1,0)
 
 
 

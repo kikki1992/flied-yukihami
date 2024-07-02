@@ -1,5 +1,6 @@
 import pyxel
 from pyxelunicode import PyxelUnicode
+import PyxelUniversalFont as puf
 from start import *
 from game import *
 from end1 import *
@@ -29,7 +30,7 @@ class App():
         if pyxel.btn(pyxel.KEY_R):
             self.flag = 1
             self.game = Game()
-            self.game = Game()
+            #self.game = Game()
             self.end1 = End1()
             self.end2 = End2()
         

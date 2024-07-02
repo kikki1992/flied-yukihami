@@ -1,7 +1,8 @@
 from email import message
 from numpy import True_
 import pyxel
-from pyxelunicode import PyxelUnicode
+#from pyxelunicode import PyxelUnicode
+import PyxelUniversalFont as puf
 
 from pattern import *
 from player import *
@@ -14,9 +15,10 @@ Win_w = 160
 Win_h = 90
 
 #font
-gothic_path = "assets/misaki_ttf_2021-05-05/misaki_gothic.ttf" # ttfファイルのパス
-gothic_size = 8  # このフォントが設計された大きさ(px単位)を代入する
-mplus_path = "assets/misaki_ttf_2021-05-05/PixelMplus10-Regular.ttf"
+#gothic_path = "assets\misaki_ttf_2019-10-19\misaki_gothic_2nd.ttf" # ttfファイルのパス
+#gothic_size = 12  # このフォントが設計された大きさ(px単位)を代入する
+#mplus_path = "assets\misaki_ttf_2019-10-19\misaki_gothic_2nd.ttf"
+#mplus_size = 8  # このフォントが設計された大きさ(px単位)を代入する
 
 message_1_1 = "フワンテに協力してもらって飛ぼう"
 message_1_2 = "りんごに当たると時間が減るぞ"
@@ -24,8 +26,10 @@ message_1_2 = "りんごに当たると時間が減るぞ"
 class Game():
     def __init__(self):
 
-        self.gothic = PyxelUnicode(gothic_path, gothic_size)
-        self.mplus = PyxelUnicode(mplus_path, 10)
+        #self.gothic = PyxelUnicode(gothic_path,gothic_size)
+        #self.mplus = PyxelUnicode(mplus_path,mplus_size)
+
+        self.gothic = puf.Writer("misaki_gothic.ttf")
 
         self.time = 900 #ゲームの時間
         #関数のセット
@@ -114,17 +118,19 @@ class Game():
         self.point.draw()
         self.player.draw(self.stage_flag,self.point.eat)
 
-        self.gothic.text(70,2,"制限時間",9)
-        self.mplus.text(110,0,f"{round(self.time/30)}",10)
+        #self.gothic.text(70,2,"制限時間",9)
+        self.gothic.draw(70,2,"制限時間",8)
+        #self.mplus.text(110,0,f"{round(self.time/30)}",10)
+        self.gothic.draw(110,0,f"{round(self.time/30)}",10)
 
-        self.gothic.text(1,2,"スコア",9)
-        self.mplus.text(55,0,f"{self.point.score}",10)
+        self.gothic.draw(1,2,"スコア",8)
+        self.gothic.draw(55,0,f"{self.point.score}",10)
 
         if self.message_flag == 1:
             pyxel.rect(10, 38, 140, 28, 1)
             pyxel.rect(11, 39, 138, 26, 7)
-            self.gothic.text(15,42,message_1_1,1)
-            self.gothic.text(15,52,message_1_2,1)
+            self.gothic.draw(15,42,message_1_1,8)
+            self.gothic.draw(15,52,message_1_2,8)
             
         if self.message_flag == 2:
             pyxel.text(62,60,"Stage 2",9)
